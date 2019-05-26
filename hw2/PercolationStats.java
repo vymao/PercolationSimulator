@@ -5,7 +5,7 @@ import java.lang.Math;
 
 public class PercolationStats {
 
-    private int[] stats;
+    public double[] stats;
     private int trials;
 
 
@@ -15,18 +15,18 @@ public class PercolationStats {
         }
 
         trials = T;
-        stats = new int[T];
+        stats = new double[T];
 
         for (int i = 0; i < T; i += 1) {
             Percolation newPerc = pf.make(N);
-            while (!newPerc.percolates()) {
+            while (newPerc.percolates() == false) {
                 int row = StdRandom.uniform(N);
                 int column = StdRandom.uniform(N);
 
                 newPerc.open(row, column);
             }
 
-            stats[i] = (newPerc.numberOfOpenSites() / (N * N));
+            stats[i] = (newPerc.numberOfOpenSites() / (double) (N * N));
         }
 
 
