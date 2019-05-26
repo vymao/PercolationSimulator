@@ -5,7 +5,7 @@ import java.lang.Math;
 
 public class PercolationStats {
 
-    public double[] stats;
+    private double[] stats;
     private int trials;
 
 
