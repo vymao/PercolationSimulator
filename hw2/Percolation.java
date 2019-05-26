@@ -22,20 +22,23 @@ public class Percolation {
         OpenSites = 0;
 
         for (int i = 1; i <= N; i += 1) {
-            groupGrid.union(0, i);
             groupGrid.union(((N * N) + 1), (i + (N - 1) * N));
-            waterGrid.union(0, i);
         }
     }
 
     public void open(int row, int col) {
         if (row > dimension || col > dimension) {
-            throw new IllegalArgumentException();
+            throw new IndexOutOfBoundsException();
+        } else if (!isOpen(row, col)) {
+            OpenSites += 1;
         }
-
-        OpenSites += 1;
         world[row][col] = 1;
         int n1 = col + 1 + (dimension * row);
+
+        if (row == 0) {
+            groupGrid.union(0, (col + 1));
+            waterGrid.union(0, (col + 1));
+        }
 
         try {
             if (isOpen((row - 1), col)) {
@@ -69,14 +72,14 @@ public class Percolation {
 
     public boolean isOpen(int row, int col) {
         if (row > dimension || col > dimension) {
-            throw new IllegalArgumentException();
+            throw new IndexOutOfBoundsException();
         }
         return world[row][col] == 1;
     }
 
     public boolean isFull(int row, int col) {
         if (row > dimension || col > dimension) {
-            throw new IllegalArgumentException();
+            throw new IndexOutOfBoundsException();
         }
         if (isOpen(row, col)) {
             int n1 = col + 1 + (dimension * row);
